@@ -16,7 +16,7 @@ func TestDBusIntrospectionXML(t *testing.T) {
   </interface>
 </node>`
 
-	var node Node
+	var node node
 	err := xml.Unmarshal([]byte(inputXML), &node)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal XML: %v", err)
@@ -45,14 +45,17 @@ func TestDBusIntrospectionXML(t *testing.T) {
 	}
 }
 
-// Test the
-func TestGetA11yStatus(t *testing.T) {
+// Test the screen reader status.
+// To test this you should first start Orca or set the dbus property
+// yourself. We do this instead of automatically setting it ourselves
+// so we don't potentially disrupt the user's screen reader
+func TestScreenReaderStatus(t *testing.T) {
 	status, err := ScreenReaderStatus()
 	if err != nil {
 		t.Fatalf("Failed to get A11yStatus: %v", err)
 	}
 
 	if !status.IsEnabled {
-		t.Error("A11y is not enabled")
+		t.Error("A11y is not enabled; This is a sign either Orca is not running or the dbus property was not retrieved properly")
 	}
 }

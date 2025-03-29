@@ -37,7 +37,7 @@ func ScreenReaderStatus() (OrgA11yStatus, error) {
 	}
 
 	// Parse the XML using the defined structs
-	var node Node
+	var node node
 	err = xml.Unmarshal([]byte(introspectionXML), &node)
 	if err != nil {
 		return OrgA11yStatus{}, fmt.Errorf("failed to unmarshal XML: %v", err)

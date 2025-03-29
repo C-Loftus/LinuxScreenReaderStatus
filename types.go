@@ -2,46 +2,47 @@ package a11yStatus
 
 import "encoding/xml"
 
-// Node represents the root element of the introspection XML
+// node represents the root element of the introspection XML
 // It contains multiple interfaces.
-type Node struct {
-	XMLName    xml.Name    `xml:"node"`
-	Interfaces []Interface `xml:"interface"`
+type node struct {
+	XMLName    xml.Name     `xml:"node"`
+	Interfaces []_interface `xml:"interface"`
 }
 
-// Interface represents a DBus interface containing methods, signals, and properties.
-type Interface struct {
+// _interface represents a DBus interface containing methods, signals, and properties.
+// it is prefixed with an underscore to avoid clashing with the golang interface keyword
+type _interface struct {
 	XMLName    xml.Name   `xml:"interface"`
 	Name       string     `xml:"name,attr"`
-	Methods    []Method   `xml:"method"`
-	Signals    []Signal   `xml:"signal"`
-	Properties []Property `xml:"property"`
+	Methods    []method   `xml:"method"`
+	Signals    []signal   `xml:"signal"`
+	Properties []property `xml:"property"`
 }
 
-// Method represents a method inside a DBus interface.
-type Method struct {
+// method represents a method inside a DBus interface.
+type method struct {
 	XMLName xml.Name `xml:"method"`
 	Name    string   `xml:"name,attr"`
-	Args    []Arg    `xml:"arg"`
+	Args    []arg    `xml:"arg"`
 }
 
-// Signal represents a signal inside a DBus interface.
-type Signal struct {
+// signal represents a signal inside a DBus interface.
+type signal struct {
 	XMLName xml.Name `xml:"signal"`
 	Name    string   `xml:"name,attr"`
-	Args    []Arg    `xml:"arg"`
+	Args    []arg    `xml:"arg"`
 }
 
-// Property represents a property inside a DBus interface.
-type Property struct {
+// property represents a property inside a DBus interface.
+type property struct {
 	XMLName xml.Name `xml:"property"`
 	Name    string   `xml:"name,attr"`
 	Type    string   `xml:"type,attr"`
 	Access  string   `xml:"access,attr"`
 }
 
-// Arg represents an argument inside a method or signal.
-type Arg struct {
+// arg represents an argument inside a method or signal.
+type arg struct {
 	XMLName   xml.Name `xml:"arg"`
 	Type      string   `xml:"type,attr"`
 	Name      string   `xml:"name,attr,omitempty"`
